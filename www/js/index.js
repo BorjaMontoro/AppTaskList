@@ -29,7 +29,16 @@ function onDeviceReady() {
 }
 function addElem() {
     let texto=window.prompt("Que tarea quieres añadir?");
-    $('ul').append(`<li>${texto}</li>`);
-    $('ul').listview("refresh");
+    if (texto.trim()!=""){
+        let elem = `<li>
+                        <div class="contenedor">
+                            <label class="nombre">${texto}</label>
+                            <button class="eliminar">Eliminar</button>
+                        </div>
+                    </li>`;
+        $('ul').append(elem);
+        $('ul').listview("refresh");
+    }
+
 }
 $('#boto1').click(addElem);

@@ -70,6 +70,21 @@ h1 {
     text-align:center;
 }
 
+.contenedor { 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.eliminar{
+    width: 100px !important;
+}
+
+.nombre{
+    display: flex !important;
+    align-items: center;
+}
+
 .event {
     border-radius:4px;
     color:#FFFFFF;
@@ -101,7 +116,6 @@ h1 {
     animation:fade 3000ms infinite;
     -webkit-animation:fade 3000ms infinite;
 }
-
 
 @media screen and (prefers-color-scheme: dark) {
     body {
