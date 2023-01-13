@@ -33,7 +33,6 @@ function addElem() {
         let elem = `<li>
                         <div class="contenedor">
                             <label class="nombre">${texto}</label>
-                            <button class="eliminar">Eliminar</button>
                         </div>
                     </li>`;
         $('ul').append(elem);
@@ -41,4 +40,9 @@ function addElem() {
     }
 
 }
+function elimna (e){
+    $(e.target).parent().parent().remove();
+    return false;
+}
 $('#boto1').click(addElem);
+
