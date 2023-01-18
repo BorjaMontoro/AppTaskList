@@ -20,7 +20,7 @@
 // Wait for the deviceready event before using any of Cordova's device APIs.
 // See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
 document.addEventListener('deviceready', onDeviceReady, false);
-
+let generalEditElem;
 function onDeviceReady() {
     // Cordova is now initialized. Have fun!
 
@@ -30,19 +30,37 @@ function onDeviceReady() {
 function addElem() {
     let texto=window.prompt("Que tarea quieres añadir?");
     if (texto.trim()!=""){
-        let elem = `<li>
+        let elem = $(`<li>
                         <div class="contenedor">
                             <label class="nombre">${texto}</label>
+                            <button class="eliminar">Eliminar</button>
+                            <a href="#editPage">
+                                <button class="editar">Editar</button>
+                            </a>
                         </div>
-                    </li>`;
+                    </li>`);
+        $(".eliminar",elem).click((e) => {
+            $(e.target).parent().parent().remove();
+            return false;
+        });
+        $(".editar",elem).click((e) => {
+            generalEditElem=$(e.target).parent().parent().parent();
+            $("#nuevoNombre").val("");
+        });
+
         $('ul').append(elem);
         $('ul').listview("refresh");
     }
 
 }
-function elimna (e){
-    $(e.target).parent().parent().remove();
-    return false;
-}
+
 $('#boto1').click(addElem);
+$("#modificar").click(function() {
+            let nuevoNombre = $("#nuevoNombre").val();
+            console.log(nuevoNombre);
+            let etiqueta=generalEditElem.children().find("label");
+
+            etiqueta.text(nuevoNombre);
+            window.location = "#";
+        });
 

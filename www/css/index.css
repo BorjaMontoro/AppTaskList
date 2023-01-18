@@ -80,6 +80,14 @@ h1 {
     width: 100px !important;
 }
 
+.editar{
+    width: 100px !important;
+}
+
+.cambiar{
+    width: 100px !important;
+}
+
 .nombre{
     display: flex !important;
     align-items: center;
