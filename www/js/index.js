@@ -24,7 +24,7 @@ let generalEditElem;
 let datos=[];
 function onDeviceReady() {
     // Cordova is now initialized. Have fun!
-
+    refresh();
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
     document.getElementById('deviceready').classList.add('ready');
 }
