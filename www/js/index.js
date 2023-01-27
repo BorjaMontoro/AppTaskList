@@ -21,6 +21,7 @@
 // See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
 document.addEventListener('deviceready', onDeviceReady, false);
 let generalEditElem;
+let datos=[];
 function onDeviceReady() {
     // Cordova is now initialized. Have fun!
 
@@ -30,9 +31,20 @@ function onDeviceReady() {
 function addElem() {
     let texto=window.prompt("Que tarea quieres añadir?");
     if (texto.trim()!=""){
+        datos.push(texto);
+        localStorage.setItem("datos",JSON.stringify(datos));
+        refresh();
+        
+    }
+
+}
+function refresh(){
+    datos=JSON.parse(localStorage.getItem("datos"));
+    $('ul').empty();
+    for (let i=0;i<datos.length;i++){
         let elem = $(`<li>
                         <div class="contenedor">
-                            <label class="nombre">${texto}</label>
+                            <label class="nombre">${datos[i]}</label>
                             <button class="eliminar">Eliminar</button>
                             <a href="#editPage">
                                 <button class="editar">Editar</button>
@@ -40,27 +52,30 @@ function addElem() {
                         </div>
                     </li>`);
         $(".eliminar",elem).click((e) => {
-            $(e.target).parent().parent().remove();
+            datos=JSON.parse(localStorage.getItem("datos"));
+            let indice=datos.indexOf($(e.target).parent().find("label").text());
+            datos.splice(indice,1);
+            localStorage.setItem("datos",JSON.stringify(datos));
+            refresh();
             return false;
         });
         $(".editar",elem).click((e) => {
             generalEditElem=$(e.target).parent().parent().parent();
             $("#nuevoNombre").val("");
         });
-
         $('ul').append(elem);
-        $('ul').listview("refresh");
     }
-
+    $('ul').listview("refresh");
 }
 
 $('#boto1').click(addElem);
 $("#modificar").click(function() {
             let nuevoNombre = $("#nuevoNombre").val();
-            console.log(nuevoNombre);
-            let etiqueta=generalEditElem.children().find("label");
-
-            etiqueta.text(nuevoNombre);
+            datos=JSON.parse(localStorage.getItem("datos"));
+            let indice=datos.indexOf(generalEditElem.children().find("label").text());
+            datos.splice(indice,1,nuevoNombre);
+            localStorage.setItem("datos",JSON.stringify(datos));
+            refresh();
             window.location = "#";
         });
 
