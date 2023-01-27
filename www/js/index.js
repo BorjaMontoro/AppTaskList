@@ -61,7 +61,7 @@ function refresh(){
         });
         $(".editar",elem).click((e) => {
             generalEditElem=$(e.target).parent().parent().parent();
-            $("#nuevoNombre").val("");
+            $("#nuevoNombre").val(generalEditElem.children().find("label").text());
         });
         $('ul').append(elem);
     }
