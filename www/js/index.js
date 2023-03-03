@@ -23,13 +23,17 @@ let generalEditElem;
 document.addEventListener('deviceready', onDeviceReady, false);
 function onDeviceReady() {
     // Cordova is now initialized. Have fun!
-    let datos=[];
+    if (!localStorage.getItem("datos")){
+        let datos=JSON.parse(localStorage.getItem("datos"));
+        localStorage.setItem("datos",JSON.stringify([]));
+    }
     refresh();
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
 }
 function addElem() {
     let texto=window.prompt("Que tarea quieres añadir?");
     if (texto.trim()!=""){
+        let datos=JSON.parse(localStorage.getItem("datos"));
         datos.push(texto);
         localStorage.setItem("datos",JSON.stringify(datos));
         refresh();
@@ -38,7 +42,7 @@ function addElem() {
 
 }
 function refresh(){
-    datos=JSON.parse(localStorage.getItem("datos"));
+    let datos=JSON.parse(localStorage.getItem("datos"));
     $('ul').empty();
     for (let i=0;i<datos.length;i++){
         let elem = $(`<li>
@@ -51,7 +55,7 @@ function refresh(){
                         </div>
                     </li>`);
         $(".eliminar",elem).click((e) => {
-            datos=JSON.parse(localStorage.getItem("datos"));
+            let datos=JSON.parse(localStorage.getItem("datos"));
             let indice=datos.indexOf($(e.target).parent().find("label").text());
             datos.splice(indice,1);
             localStorage.setItem("datos",JSON.stringify(datos));
